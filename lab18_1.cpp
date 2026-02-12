@@ -7,19 +7,21 @@ struct Rect
 	double x, y, w, h;
 };
 
-double overlap(Rect Rx, Rect Ry)
+double overlap(Rect R1, Rect R2)
 {
 
-	double EdgeLeft_x = Rx.x, EdgeRight_x = Rx.x + Rx.w,
-		   EdgeTop_x = Rx.y, EdgeBottom_x = Rx.y + Rx.h;
+	double EdgeLeft_1 = R1.x, EdgeRight_1 = R1.x + R1.w,
+		   EdgeTop_1 = R1.y, EdgeBottom_1 = R1.y + R1.h;
 
-	double EdgeLeft_y = Ry.x, EdgeRight_y = Ry.x + Ry.w,
-		   EdgeTop_y = Ry.y, EdgeBottom_y = Ry.y + Ry.h;
+	double EdgeLeft_2 = R2.x, EdgeRight_2 = R2.x + R2.w,
+		   EdgeTop_2 = R2.y, EdgeBottom_2 = R2.y + R2.h;
 
-	double Left_inter = max(EdgeLeft_x, EdgeLeft_y),
-		   Right_inter = min(EdgeRight_x, EdgeRight_y),
-		   Top_inter = max(EdgeTop_x, EdgeTop_y),
-		   Bottom_inter = min(EdgeBottom_x, EdgeBottom_y);
+	double Left_inter, Right_inter, Top_inter, Bottom_inter;
+
+	Left_inter = max(EdgeLeft_1, EdgeLeft_2),
+	Right_inter = min(EdgeRight_1, EdgeRight_2),
+	Top_inter = max(EdgeTop_1, EdgeTop_2),
+	Bottom_inter = min(EdgeBottom_1, EdgeBottom_2);
 
 	double width = Right_inter - Left_inter,
 		   height = Bottom_inter - Top_inter;
