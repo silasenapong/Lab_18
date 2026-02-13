@@ -9,46 +9,54 @@ struct Rect
 
 double overlap(Rect R1, Rect R2)
 {
-
-	double EdgeLeft_1 = R1.x, EdgeRight_1 = R1.x + R1.w,
-		   EdgeTop_1 = R1.y, EdgeBottom_1 = R1.y + R1.h;
-
-	double EdgeLeft_2 = R2.x, EdgeRight_2 = R2.x + R2.w,
-		   EdgeTop_2 = R2.y, EdgeBottom_2 = R2.y + R2.h;
-
-	double Left_inter, Right_inter, Top_inter, Bottom_inter, width, height;
-
-	Left_inter = max(EdgeLeft_1, EdgeLeft_2);
-	Right_inter = min(EdgeRight_1, EdgeRight_2);
-	Top_inter = max(EdgeTop_1, EdgeTop_2);
-	Bottom_inter = min(EdgeBottom_1, EdgeBottom_2);
-
-	if (EdgeLeft_1 < EdgeLeft_2 && EdgeRight_1 > EdgeRight_2 &&
-		EdgeTop_1 > EdgeTop_2 && EdgeBottom_1 > EdgeBottom_2)
+	double left, right;
+	if (R1.x > R2.x)
 	{
-		width = R2.w;
-		height = R2.h;
-	}
-	else if (EdgeLeft_1 > EdgeLeft_2 && EdgeRight_1 < EdgeRight_2 &&
-			 EdgeTop_1 < EdgeTop_2 && EdgeBottom_1 < EdgeBottom_2)
-	{
-		width = R1.w;
-		height = R1.h;
+		left = R1.x;
 	}
 	else
 	{
-		width = Right_inter - Left_inter;
-		height = Bottom_inter - Top_inter;
+		left = R2.x;
 	}
 
-	if (width <= 0 || height <= 0)
+	if (R1.x + R1.w < R2.x + R2.w)
+	{
+		right = R1.x + R1.w;
+	}
+	else
+	{
+		right = R2.x + R2.w;
+	}
+
+	double overlap_width = right - left;
+
+	double top, bottom;
+	if (R1.y < R2.y)
+	{
+		top = R1.y;
+	}
+	else
+	{
+		top = R2.y;
+	}
+
+	if (R1.y - R1.h > R2.y - R2.h)
+	{
+		bottom = R1.y - R1.h;
+	}
+	else
+	{
+		bottom = R2.y - R2.h;
+	}
+
+	double overlap_height = top - bottom;
+
+	if (overlap_width <= 0 || overlap_height <= 0)
 	{
 		return 0;
 	}
-	else
-	{
-		return width * height;
-	}
+
+	return overlap_width * overlap_height;
 }
 
 int main()
